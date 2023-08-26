@@ -52,3 +52,6 @@ gem 'rubocop', '>= 1.0', '< 2.0'
 
 # devise
 gem 'devise', '~> 4.9'
+
+# api serializer
+gem 'active_model_serializers', '~> 0.10.13'
