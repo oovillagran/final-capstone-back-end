@@ -1,4 +1,5 @@
 class DoctorsController < ApplicationController
+  before_action :set_doctor, only: [:show, :destroy]
 
   # GET /doctors
   def index
@@ -6,10 +7,8 @@ class DoctorsController < ApplicationController
     render json: @doctors
   end
 
-  
   # GET /doctors/1
   def show
-    @doctor = Doctor.find(params[:id])
     render json: @doctor
   end
   
@@ -25,17 +24,30 @@ class DoctorsController < ApplicationController
     if @doctor.save
       render json: @doctor, status: :created, location: @doctor
     else
-      render json: @doctor.errors, status: unprocesable_entity
+      render json: @doctor.errors, status: :unprocesable_entity
+    end
+  end
+
+  # PATCH /doctors/1
+  def update
+    if @doctor.update(doctor_params)
+      render json: @doctor
+    else
+      render json: @doctor.errors, status: :unprocesable_entity
     end
   end
 
   # DELETE /doctors/1
   def destroy
-    @doctor = Doctor.find(params[:id])
     @doctor.destroy
   end
 
+  private
+  def set_doctor
+    @doctor = Doctor.find(params[:id])
+  end
+
   def doctor_params
-    params.require(:doctor).permit(:name, :photo, :bio, :experience_years, )
+    params.require(:doctor).permit(:name, :photo, :bio, :experience_years, :user_id)
   end
 end

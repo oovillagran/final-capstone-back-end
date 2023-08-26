@@ -18,12 +18,12 @@ Rails.application.routes.draw do
   # root "users#index"
   
   resources :users, only: [:index, :show, :new, :create, :destroy] do
-    resources :reservations, only: [:index, :show, :new, :create, :destroy]
+    resources :reservations, only: [:index, :show, :new, :create, :update, :destroy]
   end
   
-  resources :doctors, only: [:index, :show, :new, :create, :destroy] do
-    resources :specialties
-  end
+  resources :doctors, only: [:index, :show, :new, :create, :destroy, :update]
+  
+  resources :specialties
   
   resources :clinics
 

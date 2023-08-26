@@ -1,7 +1,8 @@
 class SpecialtiesController < ApplicationController
   def index
-    @doctor = Doctor.find(params[:doctor_id])
-    @specialties = Specialty.where(doctor_id: @doctor)
+    @specialties = Specialty.all
     render json: @specialties
   end
+
+  
 end
