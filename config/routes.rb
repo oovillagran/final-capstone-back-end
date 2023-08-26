@@ -21,9 +21,10 @@ Rails.application.routes.draw do
     resources :reservations, only: [:index, :show, :new, :create, :destroy]
   end
   
-  resources :doctors, only: [:index, :show, :new, :create, :destroy]
-
+  resources :doctors, only: [:index, :show, :new, :create, :destroy] do
+    resources :specialties
+  end
+  
   resources :clinics
 
-  resources :specialties
 end
