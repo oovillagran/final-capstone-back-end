@@ -17,14 +17,17 @@ Rails.application.routes.draw do
   # devise_for :users, controllers: { passwords: 'devise/passwords' }
   # root "users#index"
   
-  resources :users, only: [:index, :show, :new, :create, :destroy] do
-    resources :reservations, only: [:index, :show, :new, :create, :update, :destroy]
-  end
-  
-  resources :doctors, only: [:index, :show, :new, :create, :destroy, :update]
-  
-  resources :specialties
-  
-  resources :clinics
+  namespace :api do
+    namespace :v1 do
+      resources :users, only: [:index, :show, :new, :create, :destroy] do
+        resources :reservations, only: [:index, :show, :new, :create, :update, :destroy]
+      end
 
+      resources :doctors, only: [:index, :show, :new, :create, :destroy, :update]
+
+      resources :specialties
+
+      resources :clinics
+    end
+  end
 end

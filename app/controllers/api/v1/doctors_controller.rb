@@ -1,5 +1,5 @@
-class DoctorsController < ApplicationController
-  before_action :set_doctor, only: [:show, :destroy]
+class Api::V1::DoctorsController < ApplicationController
+  before_action :set_doctor, only: [:show, :destroy, :update]
 
   # GET /doctors
   def index
