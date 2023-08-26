@@ -22,4 +22,8 @@ Rails.application.routes.draw do
   end
   
   resources :doctors, only: [:index, :show, :new, :create, :destroy]
+
+  resources :clinics
+
+  resources :specialties
 end
