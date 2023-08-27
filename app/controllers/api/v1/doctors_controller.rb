@@ -21,7 +21,7 @@ class Api::V1::DoctorsController < ApplicationController
   # POST /doctors
   def create
     @doctor = Doctor.new(doctor_params)
-    @doctor.user = @user.id # authentication?
+    @doctor.user = @user # authentication?
 
     if @doctor.save
       render json: @doctor, status: :created

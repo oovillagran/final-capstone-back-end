@@ -13,7 +13,7 @@ class Api::V1::ClinicsController < ApplicationController
 
   def create
     @clinic = Clinic.new(clinic_params)
-    @clinic.user = @user.id # authorization?
+    @clinic.user = @user # authorization?
 
     if @clinic.save
       render json: @clinic, status: :created

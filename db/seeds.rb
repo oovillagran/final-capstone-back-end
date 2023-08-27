@@ -29,8 +29,11 @@ specialty_sixth = Specialty.create(name: "Pediatrician", doctor: doctor_sixth)
 
 # Create Clinics
 clinic_one = Clinic.create(name: "Cardiology Clinics", city: "Oslo", address: "Av. Ocean 432", doctor: doctor_three )
-clinic_two = Clinic.create(name: "Woman Clinics", city: "Brew", address: "Av. southern 289", doctor: doctor_two)
-clinic_three = Clinic.create(name: "Surgical Clinics", city: "Oslo", address: "Av. Guzank 394", doctor: doctor_one)
+clinic_two = Clinic.create(name: "Woman Clinics", city: "Bergen", address: "Av. southern 289", doctor: doctor_two)
+clinic_three = Clinic.create(name: "Surgical Clinics", city: "Stavanger", address: "Av. Guzank 394", doctor: doctor_one)
+clinic_fourth = Clinic.create(name: "Cardiology Clinics", city: "Oslo", address: "Av. southern 289", doctor: doctor_fifth)
+clinic_fifth = Clinic.create(name: "Woman Clinics", city: "Bergen", address: "Av. Guzank 394", doctor: doctor_fourth)
+clinic_sixth = Clinic.create(name: "Surgical Clinics", city: "Stavanger", address: "Av. Guzank 394", doctor: doctor_sixth)
 
 # Create Reservations
 reservation_one = Reservation.create( reservation_date: '15-10-2023', reservation_time: '10:45', status: true, user: user_two, doctor: doctor_three, clinic: clinic_one)
