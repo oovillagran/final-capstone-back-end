@@ -1,5 +1,6 @@
 class Api::V1::ClinicsController < ApplicationController
   before_action :set_clinic, only: [:show, :update, :destroy]
+  before_action :authorized
 
   def index
     @clinics = Clinic.all
@@ -12,11 +13,12 @@ class Api::V1::ClinicsController < ApplicationController
 
   def create
     @clinic = Clinic.new(clinic_params)
+    @clinic.user = @user.id # authorization?
 
     if @clinic.save
-      render json: @clinic, status: :created, location: @clinic
+      render json: @clinic, status: :created
     else
-      render json: @clinic.errors, status: :unprocesable_entity
+      render json: @clinic.errors, status: :unprocessable_entity
     end
   end
 
@@ -24,7 +26,7 @@ class Api::V1::ClinicsController < ApplicationController
     if @clinic.update(clinic_params)
       render json: @clinic
     else
-      render json: @clinic.errors, status: :unprocesable_entity
+      render json: @clinic.errors, status: :unprocessable_entity
     end
   end
 

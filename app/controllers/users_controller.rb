@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorized, only: [:auto_login]
+  before_action :authorized, only: [:auto_login, :destroy]
 
   # REGISTER
   def create
@@ -26,6 +26,11 @@ class UsersController < ApplicationController
 
   def auto_login
     render json: @user
+  end
+
+  # Logout
+  def destroy
+    render json: { message: "Logged out successfully"}
   end
 
   private

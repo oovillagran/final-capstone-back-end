@@ -1,5 +1,6 @@
 class Api::V1::SpecialtiesController < ApplicationController
   before_action :set_specialty, only: [:show, :destroy]
+  before_action :authorized
 
   def index
     @specialties = Specialty.all
@@ -12,11 +13,12 @@ class Api::V1::SpecialtiesController < ApplicationController
   
   def create
     @specialty = Specialty.new(specialty_params)
+    @specialty.user = @user.id # authentication?
 
     if @specialty.save
-      render json: @specialty, status: :created, location: @specialty
+      render json: @specialty, status: :created
     else
-      render json: @specialty.errors, status: :unprocesable_entity
+      render json: @specialty.errors, status: :unprocessable_entity
     end
   end
 

@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  
+  before_action :authorized
+
   # GET /users
   def index
     @users = User.all

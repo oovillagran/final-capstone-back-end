@@ -1,5 +1,6 @@
 class Api::V1::DoctorsController < ApplicationController
   before_action :set_doctor, only: [:show, :destroy, :update]
+  before_action :authorized
 
   # GET /doctors
   def index
@@ -20,11 +21,12 @@ class Api::V1::DoctorsController < ApplicationController
   # POST /doctors
   def create
     @doctor = Doctor.new(doctor_params)
+    @doctor.user = @user.id # authentication?
 
     if @doctor.save
-      render json: @doctor, status: :created, location: @doctor
+      render json: @doctor, status: :created
     else
-      render json: @doctor.errors, status: :unprocesable_entity
+      render json: @doctor.errors, status: :unprocessable_entity
     end
   end
 
@@ -33,7 +35,7 @@ class Api::V1::DoctorsController < ApplicationController
     if @doctor.update(doctor_params)
       render json: @doctor
     else
-      render json: @doctor.errors, status: :unprocesable_entity
+      render json: @doctor.errors, status: :unprocessable_entity
     end
   end
 

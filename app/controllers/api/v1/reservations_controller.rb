@@ -1,5 +1,6 @@
 class Api::V1::ReservationsController < ApplicationController
   before_action :set_reservation, only: [:show, :update, :destroy]
+  before_action :authorized
 
   def index
     @user = User.find(params[:user_id])
@@ -18,11 +19,12 @@ class Api::V1::ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
+    @reservation.user = @user # authentication?
 
     if @reservation.save
-      render json: @reservation, status: :created, location: @reservation
+      render json: @reservation, status: :created
     else
-      render json: @reservation.errors, status: :unprocesable_entity
+      render json: @reservation.errors, status: :unprocessable_entity
     end
   end
 
@@ -30,7 +32,7 @@ class Api::V1::ReservationsController < ApplicationController
     if @reservation.update(reservation_params)
       render json: @reservation
     else
-      render json: @reservation.errors, status: :unprocesable_entity
+      render json: @reservation.errors, status: :unprocessable_entity
     end
   end
 
