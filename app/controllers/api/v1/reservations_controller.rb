@@ -1,17 +1,25 @@
 class Api::V1::ReservationsController < ApplicationController
   before_action :set_reservation, only: [:show, :update, :destroy]
+  # before_action :authorized
 
   def index
-    @reservations = Reservation.all
+    @user = User.find(params[:user_id])
+    @reservations = Reservation.where(user_id: @user).order(created_at: :desc)
     render json: @reservations
   end
 
   def show
+    @reservation = Reservation.find(params[:id])
     render json: @reservation
+  end
+
+  def new
+    @reservation = Reservation.new
   end
 
   def create
     @reservation = Reservation.new(reservation_params)
+
     if @reservation.save
       render json: @reservation, status: :created
     else
@@ -29,11 +37,9 @@ class Api::V1::ReservationsController < ApplicationController
 
   def destroy
     @reservation.destroy
-    head :no_content
   end
 
   private
-
   def set_reservation
     @reservation = Reservation.find(params[:id])
   end
