@@ -1,4 +1,7 @@
 class Api::V1::DoctorsController < ApplicationController
+  before_action :set_doctor, only: %i[show destroy update]
+  before_action :authorized
+
   # GET /doctors
   def index
     @doctors = Doctor.all
@@ -18,6 +21,7 @@ class Api::V1::DoctorsController < ApplicationController
   # POST /doctors
   def create
     @doctor = Doctor.new(doctor_params)
+    @doctor.user = @user # authentication?
 
     if @doctor.save
       render json: @doctor, status: :created

@@ -5,4 +5,19 @@ class Reservation < ApplicationRecord
 
   validates :reservation_date, presence: true
   validates :reservation_time, presence: true
+  validate :unique_reservation_for_doctor_on_same_day_and_time
+
+  private
+
+  def unique_reservation_for_doctor_on_same_day_and_time
+    existing_reservation = Reservation.where(
+      doctor_id:,
+      reservation_date:,
+      reservation_time:
+    ).where.not(id:) # exclude current reservation when updating
+
+    return unless existing_reservation.exists?
+
+    errors.add(:base, 'Doctor already has a reservation at the same day and time')
+  end
 end
