@@ -1,11 +1,10 @@
 class Api::V1::DoctorsController < ApplicationController
   before_action :set_doctor, only: %i[show destroy update]
-  # before_action :authorized
 
   # GET /doctors
   def index
     @doctors = Doctor.all
-    render json: @doctors.to_json(include: :specialties)
+    render json: @doctors
   end
 
   # GET /doctors/1

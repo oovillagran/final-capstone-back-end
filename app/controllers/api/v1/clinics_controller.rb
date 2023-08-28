@@ -1,6 +1,5 @@
 class Api::V1::ClinicsController < ApplicationController
   before_action :set_clinic, only: %i[show update destroy]
-  # before_action :authorized
 
   def index
     @clinics = Clinic.all

@@ -1,6 +1,5 @@
 class Api::V1::ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[show update destroy]
-  # before_action :authorized
 
   def index
     @user = User.find(params[:user_id])
