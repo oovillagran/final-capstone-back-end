@@ -10,7 +10,7 @@ class Api::V1::SpecialtiesController < ApplicationController
   def show
     render json: @specialty
   end
-  
+
   def create
     @specialty = Specialty.new(specialty_params)
     @specialty.doctor = Doctor.find(params[:doctor_id])
@@ -27,6 +27,7 @@ class Api::V1::SpecialtiesController < ApplicationController
   end
 
   private
+
   def set_specialty
     @specialty = Specialty.find(params[:id])
   end

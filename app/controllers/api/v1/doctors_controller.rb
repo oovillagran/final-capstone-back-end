@@ -12,7 +12,7 @@ class Api::V1::DoctorsController < ApplicationController
   def show
     render json: @doctor
   end
-  
+
   # GET /doctors/new
   def new
     @doctor = Doctor.new
@@ -45,6 +45,7 @@ class Api::V1::DoctorsController < ApplicationController
   end
 
   private
+
   def set_doctor
     @doctor = Doctor.find(params[:id])
   end

@@ -35,6 +35,7 @@ class Api::V1::ClinicsController < ApplicationController
   end
 
   private
+
   def set_clinic
     @clinic = Clinic.find(params[:id])
   end
