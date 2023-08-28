@@ -1,5 +1,5 @@
 class Api::V1::ClinicsController < ApplicationController
-  before_action :set_clinic, only: [:show, :update, :destroy]
+  before_action :set_clinic, only: %i[show update destroy]
 
   def index
     @clinics = Clinic.all
@@ -33,6 +33,7 @@ class Api::V1::ClinicsController < ApplicationController
   end
 
   private
+
   def set_clinic
     @clinic = Clinic.find(params[:id])
   end

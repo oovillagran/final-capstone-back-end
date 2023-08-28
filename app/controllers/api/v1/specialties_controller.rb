@@ -1,5 +1,5 @@
 class Api::V1::SpecialtiesController < ApplicationController
-  before_action :set_specialty, only: [:show, :destroy]
+  before_action :set_specialty, only: %i[show destroy]
 
   def index
     @specialties = Specialty.all
@@ -9,7 +9,7 @@ class Api::V1::SpecialtiesController < ApplicationController
   def show
     render json: @specialty
   end
-  
+
   def create
     @specialty = Specialty.new(specialty_params)
 
@@ -25,6 +25,7 @@ class Api::V1::SpecialtiesController < ApplicationController
   end
 
   private
+
   def set_specialty
     @specialty = Specialty.find(params[:id])
   end
