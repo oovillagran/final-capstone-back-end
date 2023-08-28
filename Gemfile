@@ -56,3 +56,6 @@ gem 'devise', '~> 4.9'
 
 # api serializer
 gem 'active_model_serializers', '~> 0.10.13'
+
+# authorization
+gem 'cancan'
