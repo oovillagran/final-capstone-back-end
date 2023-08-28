@@ -1,10 +1,70 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+# Create an admin user
+admin = User.create!(
+  first_name: "Admin",
+  last_name: "User",
+  email: "admin@example.com",
+  password: "password",
+  role: "admin",
+  phone_number: "1234567890", # Replace with an appropriate phone number
+  birthdate: Date.parse("1990-01-01") # Replace with a valid birthdate
+)
+
+# Create a doctor user
+doctor = User.create!(
+  first_name: "Doctor",
+  last_name: "User",
+  email: "doctor@example.com",
+  password: "password",
+  role: "doctor",
+  phone_number: "9876543210", # Replace with an appropriate phone number
+  birthdate: Date.parse("1985-05-15") # Replace with a valid birthdate
+)
+
+# Create a common user
+common_user = User.create!(
+  first_name: "Common",
+  last_name: "User",
+  email: "user@example.com",
+  password: "password",
+  role: "user",
+  phone_number: "5555555555", # Replace with an appropriate phone number
+  birthdate: Date.parse("1995-09-10") # Replace with a valid birthdate
+)
+
+# Create doctors
+doctor_profile = Doctor.create!(
+  name: "Dr. John Doe",
+  photo: "doctor.jpg",
+  bio: "Experienced doctor with specialization in cardiology.",
+  experience_years: "10",
+  user: doctor
+)
+
+# Create clinics
+clinic = Clinic.create!(
+  name: "Heart Clinic",
+  city: "New York",
+  address: "123 Main St",
+  doctor: doctor_profile
+)
+
+# Create specialties
+specialty = Specialty.create!(
+  specialty_type: "Cardiology",
+  doctor: doctor_profile
+)
+
+# Create reservations
+reservation = Reservation.create!(
+  reservation_date: Date.today,
+  reservation_time: Time.now,
+  status: true,
+  user: common_user,
+  doctor: doctor_profile,
+  clinic: clinic
+)
+
+puts "Seeds have been successfully created."
 
 # Create Users
 user_one = User.create(first_name: "Mark", last_name: "Anthony", phone_number: "+1 203 456", birthdate: "12-05-1975", role: "admin", username: "manthony", email: "manthony@test.com", password: "123456")

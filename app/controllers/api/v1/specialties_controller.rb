@@ -1,5 +1,5 @@
 class Api::V1::SpecialtiesController < ApplicationController
-  before_action :set_specialty, only: [:show, :destroy]
+  before_action :set_specialty, only: %i[show destroy]
   before_action :authorized
 
   def index
