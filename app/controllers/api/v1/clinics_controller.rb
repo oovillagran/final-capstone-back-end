@@ -13,7 +13,7 @@ class Api::V1::ClinicsController < ApplicationController
 
   def create
     @clinic = Clinic.new(clinic_params)
-    @clinic.user = @user # authorization?
+    @clinic.doctor = Doctor.find(params[:doctor_id]) # authorization?
 
     if @clinic.save
       render json: @clinic, status: :created
@@ -40,6 +40,6 @@ class Api::V1::ClinicsController < ApplicationController
   end
 
   def clinic_params
-    params.require(:clinic).permit(:name, :city, :adress, :doctor_id)
+    params.require(:clinic).permit(:name, :city, :address, :doctor_id)
   end
 end

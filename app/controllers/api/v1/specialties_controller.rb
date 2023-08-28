@@ -13,7 +13,7 @@ class Api::V1::SpecialtiesController < ApplicationController
   
   def create
     @specialty = Specialty.new(specialty_params)
-    @specialty.user = @user # authentication?
+    @specialty.doctor = Doctor.find(params[:doctor_id])
 
     if @specialty.save
       render json: @specialty, status: :created
