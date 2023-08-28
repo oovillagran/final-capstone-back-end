@@ -1,5 +1,5 @@
 class Api::V1::DoctorsController < ApplicationController
-  before_action :set_doctor, only: [:show, :destroy, :update]
+  before_action :set_doctor, only: %i[show destroy update]
   before_action :authorized
 
   # GET /doctors

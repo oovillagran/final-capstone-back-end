@@ -2,6 +2,7 @@
 admin = User.create!(
   first_name: "Admin",
   last_name: "User",
+  username: "admin",
   email: "admin@example.com",
   password: "password",
   role: "admin",
@@ -13,6 +14,7 @@ admin = User.create!(
 doctor = User.create!(
   first_name: "Doctor",
   last_name: "User",
+  username: "doctor",
   email: "doctor@example.com",
   password: "password",
   role: "doctor",
@@ -24,6 +26,7 @@ doctor = User.create!(
 common_user = User.create!(
   first_name: "Common",
   last_name: "User",
+  username: "user",
   email: "user@example.com",
   password: "password",
   role: "user",
@@ -34,7 +37,7 @@ common_user = User.create!(
 # Create doctors
 doctor_profile = Doctor.create!(
   name: "Dr. John Doe",
-  photo: "doctor.jpg",
+  photo: "https://plus.unsplash.com/premium_photo-1661764878654-3d0fc2eefcca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80",
   bio: "Experienced doctor with specialization in cardiology.",
   experience_years: "10",
   user: doctor
@@ -50,7 +53,7 @@ clinic = Clinic.create!(
 
 # Create specialties
 specialty = Specialty.create!(
-  specialty_type: "Cardiology",
+  name: "Cardiology",
   doctor: doctor_profile
 )
 
@@ -80,12 +83,12 @@ doctor_fifth = Doctor.create(name: "Dibon Ubuntu", photo: "https://images.pexels
 doctor_sixth = Doctor.create(name: "Diane Cardinal", photo: "https://images.pexels.com/photos/3714743/pexels-photo-3714743.jpeg?auto=compress&cs=tinysrgb&w=600", bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.", user: user_one, experience_years: "6")
 
 # Create Specialties
-specialty_one = Specialty.create(name: "Gynecologist", doctor: doctor_two)
-specialty_two = Specialty.create(name: "Surgeon", doctor: doctor_one)
-specialty_three = Specialty.create(name: "Cardiologist", doctor: doctor_three)
-specialty_fourth = Specialty.create(name: "Gastroenterologist", doctor: doctor_fifth)
-specialty_fifth = Specialty.create(name: "Oncologist", doctor: doctor_fourth)
-specialty_sixth = Specialty.create(name: "Pediatrician", doctor: doctor_sixth)
+specialty_one = Specialty.create(name: "Gynecology", doctor: doctor_two)
+specialty_two = Specialty.create(name: "Surgery", doctor: doctor_one)
+specialty_three = Specialty.create(name: "Cardiology", doctor: doctor_three)
+specialty_fourth = Specialty.create(name: "Gastroenterology", doctor: doctor_fifth)
+specialty_fifth = Specialty.create(name: "Oncology", doctor: doctor_fourth)
+specialty_sixth = Specialty.create(name: "Pediatrics", doctor: doctor_sixth)
 
 # Create Clinics
 clinic_one = Clinic.create(name: "Cardiology Clinics", city: "Oslo", address: "Av. Ocean 432", doctor: doctor_three )
