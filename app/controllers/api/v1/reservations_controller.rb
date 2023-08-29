@@ -1,6 +1,6 @@
 class Api::V1::ReservationsController < ApplicationController
   before_action :set_reservation, only: %i[show update destroy]
-  before_action :authorized
+  # before_action :authorized
 
   def index
     @user = User.find(params[:user_id])
@@ -9,22 +9,17 @@ class Api::V1::ReservationsController < ApplicationController
   end
 
   def show
-    @reservation = Reservation.find(params[:id])
     render json: @reservation
-  end
-
-  def new
-    @reservation = Reservation.new
   end
 
   def create
     @reservation = Reservation.new(reservation_params)
-    @reservation.user = @user # authentication?
+    @reservation.user = session_user # Assuming you have a method to get the authenticated user
 
     if @reservation.save
       render json: @reservation, status: :created
     else
-      render json: @reservation.errors, status: :unprocessable_entity
+      render json: { errors: @reservation.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -32,7 +27,7 @@ class Api::V1::ReservationsController < ApplicationController
     if @reservation.update(reservation_params)
       render json: @reservation
     else
-      render json: @reservation.errors, status: :unprocessable_entity
+      render json: { errors: @reservation.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

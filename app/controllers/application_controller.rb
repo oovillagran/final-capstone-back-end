@@ -1,26 +1,11 @@
 class ApplicationController < ActionController::API
-  # protect_from_forgery with: :exception
-
-  # before_action :update_allowed_parameters, if: :devise_controller?
-
-  # protected
-
-  # def update_allowed_parameters
-  #   devise_parameter_sanitizer.permit(:sign_up) do |u|
-  #     u.permit(:first_name, :last_name, :username, :birthdate, :email, :password)
-  #   end
-  #   devise_parameter_sanitizer.permit(:account_update) do |u|
-  #     u.permit(:first_name, :last_name, :username, :email, :password, :current_password)
-  #   end
-  # end
-  before_action :authorized
+  before_action :require_login
 
   def encode_token(payload)
-    JWT.encode(payload, 'yourSecret')
+    JWT.encode(payload, 'my_secret')
   end
 
   def auth_header
-    # { Authorization: 'Bearer <token>' }
     request.headers['Authorization']
   end
 
@@ -28,27 +13,27 @@ class ApplicationController < ActionController::API
     return unless auth_header
 
     token = auth_header.split[1]
-    # header: { 'Authorization': 'Bearer <token>' }
     begin
-      JWT.decode(token, 'yourSecret', true, algorithm: 'HS256')
+      JWT.decode(token, 'my_secret', true, algorithm: 'HS256')
     rescue JWT::DecodeError
-      nil
+      []
     end
   end
 
-  def logged_in_user
-    return unless decoded_token
+  def session_user
+    decoded_hash = decoded_token
+    return if decoded_hash.empty?
 
-    user_id = decoded_token[0]['user_id']
+    puts decoded_hash.class
+    user_id = decoded_hash[0]['user_id']
     @user = User.find_by(id: user_id)
   end
 
   def logged_in?
-    !!logged_in_user
+    !!session_user
   end
 
-  def authorized
-    render json: { message: 'Please log in' }, status: :unauthorized unless
-    logged_in?
+  def require_login
+    render json: { message: 'Please Login' }, status: :unauthorized unless logged_in?
   end
 end
