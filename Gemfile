@@ -61,5 +61,5 @@ gem 'active_model_serializers', '~> 0.10.13'
 gem 'cancan'
 
 gem 'rswag'
-gem 'rswag-ui'
 gem 'rswag-api'
+gem 'rswag-ui'

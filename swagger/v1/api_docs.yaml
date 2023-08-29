@@ -1,0 +1,23 @@
+swagger: "2.0"
+info:
+  title: API V1
+  version: v1
+paths:
+  /api/v1/users:
+    get:
+      summary: Get a list of users
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              example:
+                - id: 1
+                  username: john_doe
+                - id: 2
+                  username: jane_smith
+servers:
+  - url: https://{defaultHost}
+    variables:
+      defaultHost:
+        default: www.example.com
