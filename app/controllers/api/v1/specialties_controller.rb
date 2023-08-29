@@ -32,6 +32,6 @@ class Api::V1::SpecialtiesController < ApplicationController
   end
 
   def specialty_params
-    params.require(:specialty).permit(:name, :doctor_id)
+    params.require(:specialty).permit(:specialty_type, :doctor_id)
   end
 end
