@@ -1,6 +1,6 @@
 class Api::V1::SpecialtiesController < ApplicationController
   before_action :set_specialty, only: %i[show destroy]
-  before_action :authorized
+  # before_action :authorized
 
   def index
     @specialties = Specialty.all
@@ -13,7 +13,6 @@ class Api::V1::SpecialtiesController < ApplicationController
 
   def create
     @specialty = Specialty.new(specialty_params)
-    @specialty.doctor = Doctor.find(params[:doctor_id])
 
     if @specialty.save
       render json: @specialty, status: :created
