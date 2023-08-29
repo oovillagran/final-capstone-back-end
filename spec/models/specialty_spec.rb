@@ -12,7 +12,8 @@ RSpec.describe Specialty, type: :model do
       email: 'ericopokuantwi384@gmail.com',
       password: '123456'
     )
-    @doctor = Doctor.create(name: "Eric Antwi", photo: 'myprofile.png', bio: 'I am a dentist', experience_years: '3', user_id: @user.id)
+    @doctor = Doctor.create(name: 'Eric Antwi', photo: 'myprofile.png', bio: 'I am a dentist', experience_years: '3',
+                            user_id: @user.id)
     @specialty = Specialty.create(specialty_type: 'Dentistry', doctor_id: @doctor.id)
   end
 
