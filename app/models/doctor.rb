@@ -1,6 +1,6 @@
 class Doctor < ApplicationRecord
   belongs_to :user
-  has_many :specialties
+  has_one :specialty
   has_many :reservations
   has_many :clinics
 
