@@ -12,24 +12,40 @@ class Api::V1::UsersController < ApplicationController
     @user = User.find(params[:id])
     render json: @user
   end
+end
 
-  # GET /api/v1/users/{id}
-  swagger_path '/api/v1/users/{id}' do
-    operation :get do
-      key :summary, 'Fetch a user by ID'
-      key :tags, ['users']
-      parameter do
-        key :name, :id
-        key :in, :path
-        key :description, 'User ID'
-        key :required, true
-        key :type, :integer
-      end
-      response 200 do
-        key :description, 'User response'
-        schema do
-          key :$ref, :User
+# Swagger Annotations
+swagger_path '/users' do
+  operation :get do
+    key :summary, 'Fetch a list of users'
+    key :tags, ['users']
+    response 200 do
+      key :description, 'List of users'
+      schema do
+        key :type, :array
+        items do
+          key :'$ref', :User
         end
+      end
+    end
+  end
+end
+
+swagger_path '/users/{id}' do
+  operation :get do
+    key :summary, 'Fetch a user by ID'
+    key :tags, ['users']
+    parameter do
+      key :name, :id
+      key :in, :path
+      key :description, 'User ID'
+      key :required, true
+      key :type, :integer
+    end
+    response 200 do
+      key :description, 'User response'
+      schema do
+        key :'$ref', :User
       end
     end
   end
