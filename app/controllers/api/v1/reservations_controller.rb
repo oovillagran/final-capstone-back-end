@@ -13,7 +13,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
-    @reservation.user = session_user
+    @reservation.user = @user
 
     if @reservation.save
       render json: @reservation, status: :created
@@ -36,11 +36,11 @@ class Api::V1::ReservationsController < ApplicationController
 
   private
 
-  def set_reservation
-    @reservation = Reservation.find(params[:id])
+  def set_user
+    @user = User.find(params[:user_id])
   end
 
   def reservation_params
-    params.require(:reservation).permit(:reservation_date, :reservation_time, :status, :user_id, :doctor_id, :clinic_id)
+    params.require(:reservation).permit(:reservation_date, :reservation_time, :status, :doctor_id, :clinic_id)
   end
 end

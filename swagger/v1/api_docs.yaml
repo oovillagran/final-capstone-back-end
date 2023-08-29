@@ -78,8 +78,44 @@ paths:
                 properties:
                   error:
                     type: string
-
+  /api/v1/users/{user_id}/reservations:
+    post:
+      summary: Create a new reservation
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+      responses:
+        '201':
+          description: Created reservation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     User:
       type: object
@@ -112,11 +148,6 @@ components:
           type: array
           items:
             type: string
-    securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
 servers:
   - url: http://localhost:3000/
     variables:
