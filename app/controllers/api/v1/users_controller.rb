@@ -24,7 +24,7 @@ swagger_path '/users' do
       schema do
         key :type, :array
         items do
-          key :'$ref', :User
+          key :$ref, :User
         end
       end
     end
@@ -45,7 +45,7 @@ swagger_path '/users/{id}' do
     response 200 do
       key :description, 'User response'
       schema do
-        key :'$ref', :User
+        key :$ref, :User
       end
     end
   end
