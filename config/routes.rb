@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   resource :users, only: [:create]
   post "/login", to: "auth#login"
   get "/auto_login", to: "auth#auto_login"
