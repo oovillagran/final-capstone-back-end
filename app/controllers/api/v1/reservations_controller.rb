@@ -13,7 +13,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
-    @reservation.user = session_user # Assuming you have a method to get the authenticated user
+    @reservation.user = session_user
 
     if @reservation.save
       render json: @reservation, status: :created
