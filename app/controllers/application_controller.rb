@@ -16,7 +16,7 @@ class ApplicationController < ActionController::API
     begin
       JWT.decode(token, 'my_secret', true, algorithm: 'HS256')
     rescue JWT::DecodeError
-      []
+      nil
     end
   end
 
@@ -25,7 +25,6 @@ class ApplicationController < ActionController::API
 
     return unless decoded_hash # Return early if decoded_hash is nil
 
-    puts decoded_hash.class
     user_id = decoded_hash[0]['user_id']
     @user = User.find_by(id: user_id)
   end

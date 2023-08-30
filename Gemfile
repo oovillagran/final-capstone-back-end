@@ -59,3 +59,7 @@ gem 'active_model_serializers', '~> 0.10.13'
 
 # authorization
 gem 'cancan'
+
+gem 'rswag'
+gem 'rswag-api'
+gem 'rswag-ui'

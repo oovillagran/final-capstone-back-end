@@ -1,0 +1,155 @@
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  /users:
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                phone_number:
+                  type: string
+                birthdate:
+                  type: string
+                  format: date
+                role:
+                  type: string
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: Created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /api/v1/users/{user_id}/reservations:
+    post:
+      summary: Create a new reservation
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+      responses:
+        '201':
+          description: Created reservation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+    Reservation:
+      type: object
+      properties:
+        reservation_date:
+          type: string
+          format: date
+        reservation_time:
+          type: string
+          format: time
+        status:
+          type: boolean
+        user_id:
+          type: integer
+        doctor_id:
+          type: integer
+        clinic_id:
+          type: integer
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+servers:
+  - url: http://localhost:3000/
+    variables:
+      defaultHost:
+        default: http://localhost:3000/
