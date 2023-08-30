@@ -1,4 +1,5 @@
 class Api::V1::DoctorsController < ApplicationController
+  skip_before_action :require_login, only: %i[index]
   before_action :set_doctor, only: %i[show destroy update]
 
   # GET /doctors
