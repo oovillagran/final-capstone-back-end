@@ -22,7 +22,8 @@ class ApplicationController < ActionController::API
 
   def session_user
     decoded_hash = decoded_token
-    return unless decoded_hash
+
+    return unless decoded_hash # Return early if decoded_hash is nil
 
     user_id = decoded_hash[0]['user_id']
     @user = User.find_by(id: user_id)
