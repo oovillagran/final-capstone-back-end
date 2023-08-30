@@ -2,9 +2,163 @@ openapi: 3.0.3
 info:
   title: Doctors Appointment
   version: v1
-paths: {}
-servers:
-- url: http://localhost:3000/
-  variables:
-    defaultHost:
-      default: http://localhost:3000/
+paths:
+  /users:
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: Created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOutput'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginInput'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/users/{user_id}/reservations:
+    post:
+      summary: Create a new reservation
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservationInput'
+      responses:
+        '201':
+          description: Created reservation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationOutput'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    UserInput:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+        birthdate:
+          type: string
+          format: date
+        role:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    UserOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+        birthdate:
+          type: string
+          format: date
+        role:
+          type: string
+        email:
+          type: string
+    LoginInput:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        user:
+          $ref: '#/components/schemas/UserOutput'
+    ReservationInput:
+      type: object
+      properties:
+        reservation_date:
+          type: string
+          format: date
+        reservation_time:
+          type: string
+          format: time
+        doctor_id:
+          type: integer
+        clinic_id:
+          type: integer
+    ReservationOutput:
+      type: object
+      properties:
+        reservation_id:
+          type: integer
+        doctor_id:
+          type: integer
+        clinic_id:
+          type: integer
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
