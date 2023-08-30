@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
-  title: API V1
+  title: Doctors Appointment
   version: v1
 paths: {}
 servers:
