@@ -6,7 +6,6 @@ RSpec.describe Doctor, type: :model do
       first_name: 'Eric',
       last_name: 'Antwi',
       birthdate: Date.parse('30-09-2001'),
-      role: 'user',
       phone_number: '+233206546917',
       username: 'Mylo16',
       email: 'ericopokuantwi384@gmail.com',
