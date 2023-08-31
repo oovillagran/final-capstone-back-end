@@ -1,15 +1,22 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/clinics', type: :request do
+  shared_examples 'successful_response' do
+    after do |example|
+      example.metadata[:response][:content] = {
+        'application/json' => {
+          example: JSON.parse(response.body, symbolize_names: true)
+        }
+      }
+    end
+    run_test!
+  end
+
   path '/api/v1/clinics' do
     get('list clinics') do
       response(200, 'successful') do
         after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
+          example.metadata[:response][:content] = response_content_example
         end
         run_test!
       end
@@ -18,11 +25,7 @@ RSpec.describe 'api/v1/clinics', type: :request do
     post('create clinic') do
       response(200, 'successful') do
         after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
+          example.metadata[:response][:content] = response_content_example
         end
         run_test!
       end
@@ -30,66 +33,20 @@ RSpec.describe 'api/v1/clinics', type: :request do
   end
 
   path '/api/v1/clinics/{id}' do
-    # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
-    get('show clinic') do
-      response(200, 'successful') do
-        let(:id) { '123' }
+    %w[get patch put delete].each do |http_method|
+      operation_description = "#{http_method.capitalize} clinic"
 
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
+      send(http_method, operation_description) do
+        response(200, 'successful') do
+          let(:id) { '123' }
+
+          after do |example|
+            example.metadata[:response][:content] = response_content_example
+          end
+          run_test!
         end
-        run_test!
-      end
-    end
-
-    patch('update clinic') do
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
-    put('update clinic') do
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
-    delete('delete clinic') do
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
       end
     end
   end

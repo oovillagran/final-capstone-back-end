@@ -1,11 +1,15 @@
-openapi: 3.0.3
+---
+openapi: 3.0.1
 info:
-  title: Doctors Appointment
+  title: API V1
   version: v1
 paths:
-  /users:
+
+  "/users":
     post:
-      summary: Create a new user
+      summary: create user
+      tags:
+        - User
       requestBody:
         required: true
         content:
@@ -13,21 +17,13 @@ paths:
             schema:
               $ref: '#/components/schemas/UserInput'
       responses:
-        '201':
-          description: Created user
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserOutput'
-        '422':
-          description: Unprocessable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /login:
+        '200':
+          description: successful
+  "/login":
     post:
-      summary: User login
+      summary: login auth
+      tags:
+        - User
       requestBody:
         required: true
         content:
@@ -36,20 +32,53 @@ paths:
               $ref: '#/components/schemas/LoginInput'
       responses:
         '200':
-          description: Successful login
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LoginResponse'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /api/v1/users/{user_id}/reservations:
+          description: successful
+  "/auto_login":
+    get:
+      summary: auto_login auth
+      tags:
+        - User
+      responses:
+        '200':
+          description: successful
+  "/user_is_authed":
+    get:
+      summary: user_is_authed auth
+      tags:
+        - User
+      responses:
+        '200':
+          description: successful
+  
+  "/api/v1/users/{user_id}/reservations":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: list reservations
+      tags:
+        - Reservation
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
     post:
-      summary: Create a new reservation
+      summary: create reservation
+      tags:
+        - Reservation
       security:
         - BearerAuth: []
       requestBody:
@@ -58,21 +87,427 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ReservationInput'
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
       responses:
         '201':
-          description: Created reservation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReservationOutput'
-        '422':
-          description: Unprocessable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          description: successful
+  "/api/v1/users/{user_id}/reservations/{id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show reservation
+      tags:
+        - Reservation
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update reservation
+      tags:
+        - Reservation
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete reservation
+      tags:
+        - Reservation
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
 
+  "/api/v1/doctors":
+    get:
+      summary: list doctors
+      tags:
+        - Doctor
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create doctor
+      tags:
+        - Doctor
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+  "/api/v1/doctors/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show doctor
+      tags:
+        - Doctor
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update doctor
+      tags:
+        - Doctor
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update doctor
+      tags:
+        - Doctor
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete doctor
+      tags:
+        - Doctor
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+
+  "/api/v1/specialties":
+    get:
+      summary: list specialties
+      tags:
+        - Specialty
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create specialty
+      tags:
+        - Specialty
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+  "/api/v1/specialties/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show specialty
+      tags:
+        - Specialty
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update specialty
+      tags:
+        - Specialty
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update specialty
+      tags:
+        - Specialty
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete specialty
+      tags:
+        - Specialty
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+  
+  "/api/v1/clinics":
+    get:
+      summary: list clinics
+      tags:
+        - Clinic
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Clinic'
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create clinic
+      tags:
+        - Clinic
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Clinic'
+      responses:
+        '200':
+          description: successful
+  "/api/v1/clinics/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show clinic
+      tags:
+        - Clinic
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update clinic
+      tags:
+        - Clinic
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update clinic
+      tags:
+        - Clinic
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete clinic
+      tags:
+        - Clinic
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+  
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     UserInput:
       type: object
@@ -150,6 +585,37 @@ components:
           type: integer
         clinic_id:
           type: integer
+    Doctor:
+      type: object
+      properties:
+        name:
+          type: string
+        photo:
+          type: string
+        bio:
+          type: string
+        experience_years:
+          type: string
+        user_id:
+          type: integer
+    Clinic:
+      type: object
+      properties:
+        name:
+          type: string
+        city:
+          type: string
+        address:
+          type: string
+        doctor_id:
+          type: integer
+    Specialty:
+      type: object
+      properties:
+        name:
+          type: string
+        doctor_id:
+          type: integer
     Error:
       type: object
       properties:
@@ -157,8 +623,8 @@ components:
           type: array
           items:
             type: string
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+servers:
+- url: http://localhost:3000/
+  variables:
+    defaultHost:
+      default: http://localhost:3000/

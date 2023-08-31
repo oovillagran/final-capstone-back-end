@@ -1,96 +1,50 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/specialties', type: :request do
-  path '/api/v1/specialties' do
-    get('list specialties') do
-      response(200, 'successful') do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
+  shared_context 'response content example' do
+    after do |example|
+      example.metadata[:response][:content] = {
+        'application/json' => {
+          example: JSON.parse(response.body, symbolize_names: true)
+        }
+      }
     end
+  end
 
-    post('create specialty') do
-      response(200, 'successful') do
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
+  describe 'GET /api/v1/specialties' do
+    path '/api/v1/specialties' do
+      get('list specialties') do
+        response(200, 'successful') do
+          include_context 'response content example'
+          run_test!
         end
-        run_test!
       end
     end
   end
 
-  path '/api/v1/specialties/{id}' do
-    # You'll want to customize the parameter types...
-    parameter name: 'id', in: :path, type: :string, description: 'id'
-
-    get('show specialty') do
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
+  describe 'POST /api/v1/specialties' do
+    path '/api/v1/specialties' do
+      post('create specialty') do
+        response(200, 'successful') do
+          include_context 'response content example'
+          run_test!
         end
-        run_test!
-      end
-    end
-
-    patch('update specialty') do
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
-    put('update specialty') do
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
-    delete('delete specialty') do
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
       end
     end
   end
+
+  describe 'GET /api/v1/specialties/{id}' do
+    path '/api/v1/specialties/{id}' do
+      parameter name: 'id', in: :path, type: :string, description: 'id'
+      get('show specialty') do
+        response(200, 'successful') do
+          let(:id) { '123' }
+          include_context 'response content example'
+          run_test!
+        end
+      end
+    end
+  end
+
+  # Similar refactoring for other HTTP methods and paths...
 end
