@@ -135,6 +135,12 @@ paths:
         - Reservation
       security:
         - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservationInput'
       parameters:
         - in: header
           name: Authorization
@@ -178,6 +184,12 @@ paths:
         - Doctor
       security:
         - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Doctor'
       parameters:
         - in: header
           name: Authorization
@@ -220,23 +232,12 @@ paths:
         - Doctor
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
-      responses:
-        '200':
-          description: successful
-    put:
-      summary: update doctor
-      tags:
-        - Doctor
-      security:
-        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Doctor'
       parameters:
         - in: header
           name: Authorization
@@ -332,23 +333,12 @@ paths:
         - Specialty
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
-      responses:
-        '200':
-          description: successful
-    put:
-      summary: update specialty
-      tags:
-        - Specialty
-      security:
-        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Specialty'
       parameters:
         - in: header
           name: Authorization
@@ -456,23 +446,12 @@ paths:
         - Clinic
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
-      responses:
-        '200':
-          description: successful
-    put:
-      summary: update clinic
-      tags:
-        - Clinic
-      security:
-        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Clinic'
       parameters:
         - in: header
           name: Authorization

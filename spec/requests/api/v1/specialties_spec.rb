@@ -45,6 +45,4 @@ RSpec.describe 'api/v1/specialties', type: :request do
       end
     end
   end
-
-  # Similar refactoring for other HTTP methods and paths...
 end
