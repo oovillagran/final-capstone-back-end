@@ -1,12 +1,9 @@
 require 'swagger_helper'
 
 RSpec.describe 'auth', type: :request do
-
   path '/login' do
-
     post('login auth') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -20,10 +17,8 @@ RSpec.describe 'auth', type: :request do
   end
 
   path '/auto_login' do
-
     get('auto_login auth') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -37,10 +32,8 @@ RSpec.describe 'auth', type: :request do
   end
 
   path '/user_is_authed' do
-
     get('user_is_authed auth') do
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
