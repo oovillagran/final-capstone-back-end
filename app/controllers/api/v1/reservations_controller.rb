@@ -3,6 +3,7 @@ class Api::V1::ReservationsController < ApplicationController
   before_action :set_user, only: %i[index create]
 
   def index
+    @user = User.find(params[:user_id])
     @reservations = @user.reservations.order(created_at: :desc)
     render json: @reservations
   end

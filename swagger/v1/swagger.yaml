@@ -38,6 +38,16 @@ paths:
       summary: auto_login auth
       tags:
         - User
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
@@ -46,6 +56,16 @@ paths:
       summary: user_is_authed auth
       tags:
         - User
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
@@ -64,14 +84,6 @@ paths:
         - Reservation
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
@@ -87,14 +99,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ReservationInput'
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
         '201':
           description: successful
@@ -118,17 +122,26 @@ paths:
         - Reservation
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
+        '404':
+          description: Reservation was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  error:
+                    type: string
+                    example: Not Found
+                  exception:
+                    type: string
+                    example: "#<ActiveRecord::RecordNotFound: Couldn't find Reservation
+                      with 'id'=NaN>"
     patch:
       summary: update reservation
       tags:
@@ -141,14 +154,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ReservationInput'
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
@@ -158,14 +163,6 @@ paths:
         - Reservation
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
@@ -190,17 +187,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Doctor'
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
-        '200':
-          description: successful
+        '201':
+          description: successfully created
   "/api/v1/doctors/{id}":
     parameters:
     - name: id
@@ -215,14 +204,6 @@ paths:
         - Doctor
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
@@ -238,14 +219,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Doctor'
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
@@ -255,17 +228,9 @@ paths:
         - Doctor
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
-        '200':
-          description: successful
+        '204':
+          description: successfuly deleted.
 
   "/api/v1/specialties":
     get:
@@ -274,14 +239,6 @@ paths:
         - Specialty
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
@@ -291,17 +248,32 @@ paths:
         - Specialty
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Specialty'
       responses:
-        '200':
-          description: successful
+        '201':
+          description: successfully created
+        '422':
+          description: Doctor must exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 422
+                  error:
+                    type: string
+                    example: Doctor must exist.
+                  exception:
+                    type: string
+                    example: "#<ActiveRecord::RecordNotFound: Doctor must exist.
+                      with 'id'=NaN>"
   "/api/v1/specialties/{id}":
     parameters:
     - name: id
@@ -316,37 +288,6 @@ paths:
         - Specialty
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
-      responses:
-        '200':
-          description: successful
-    patch:
-      summary: update specialty
-      tags:
-        - Specialty
-      security:
-        - BearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Specialty'
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
@@ -356,17 +297,9 @@ paths:
         - Specialty
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
-        '200':
-          description: successful
+        '204':
+          description: successfully deleted
   
   "/api/v1/clinics":
     get:
@@ -375,20 +308,6 @@ paths:
         - Clinic
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Clinic'
       responses:
         '200':
           description: successful
@@ -398,14 +317,6 @@ paths:
         - Clinic
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       requestBody:
         required: true
         content:
@@ -413,8 +324,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Clinic'
       responses:
-        '200':
-          description: successful
+        '201':
+          description: successfully created.
   "/api/v1/clinics/{id}":
     parameters:
     - name: id
@@ -429,14 +340,6 @@ paths:
         - Clinic
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
@@ -452,14 +355,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Clinic'
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
         '200':
           description: successful
@@ -469,17 +364,9 @@ paths:
         - Clinic
       security:
         - BearerAuth: []
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer token obtained after user login
-          required: true
-          schema:
-            type: string
-            example: "Bearer your_token_here"
       responses:
-        '200':
-          description: successful
+        '204':
+          description: successfully deleted
   
 components:
   securitySchemes:
@@ -500,8 +387,6 @@ components:
         birthdate:
           type: string
           format: date
-        role:
-          type: string
         username:
           type: string
         email:
