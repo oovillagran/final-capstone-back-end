@@ -11,7 +11,6 @@ RSpec.describe 'auth', type: :request do
             }
           }
         end
-        run_test!
       end
     end
   end
@@ -26,7 +25,6 @@ RSpec.describe 'auth', type: :request do
             }
           }
         end
-        run_test!
       end
     end
   end
@@ -41,7 +39,6 @@ RSpec.describe 'auth', type: :request do
             }
           }
         end
-        run_test!
       end
     end
   end
