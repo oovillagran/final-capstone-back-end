@@ -6,8 +6,8 @@ admin = User.create!(
   email: "admin@example.com",
   password: "password",
   role: "admin",
-  phone_number: "1234567890", # Replace with an appropriate phone number
-  birthdate: Date.parse("1990-01-01") # Replace with a valid birthdate
+  phone_number: "1234567890",
+  birthdate: Date.parse("1990-01-01")
 )
 
 # Create a doctor user
@@ -18,8 +18,8 @@ doctor = User.create!(
   email: "doctor@example.com",
   password: "password",
   role: "doctor",
-  phone_number: "9876543210", # Replace with an appropriate phone number
-  birthdate: Date.parse("1985-05-15") # Replace with a valid birthdate
+  phone_number: "9876543210",
+  birthdate: Date.parse("1985-05-15")
 )
 
 # Create a common user
@@ -30,8 +30,8 @@ common_user = User.create!(
   email: "user@example.com",
   password: "password",
   role: "user",
-  phone_number: "5555555555", # Replace with an appropriate phone number
-  birthdate: Date.parse("1995-09-10") # Replace with a valid birthdate
+  phone_number: "5555555555",
+  birthdate: Date.parse("1995-09-10")
 )
 
 # Create doctors
