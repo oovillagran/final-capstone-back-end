@@ -1,9 +1,10 @@
 class Api::V1::DoctorsController < ApplicationController
+  skip_before_action :require_login, only: %i[index]
   before_action :set_doctor, only: %i[show destroy update]
 
   # GET /doctors
   def index
-    @doctors = Doctor.includes(:reservations).includes(:clinics).all
+    @doctors = Doctor.includes(:reservatios).includes(:clinics).all
     render json: @doctors
   end
 
