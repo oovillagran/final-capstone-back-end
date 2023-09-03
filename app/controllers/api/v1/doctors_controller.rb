@@ -4,7 +4,7 @@ class Api::V1::DoctorsController < ApplicationController
 
   # GET /doctors
   def index
-    @doctors = Doctor.includes(:reservatios).includes(:clinics).all
+    @doctors = Doctor.includes(:reservations).includes(:clinics).all
     render json: @doctors
   end
 
