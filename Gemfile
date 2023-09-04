@@ -63,3 +63,5 @@ gem 'cancan'
 gem 'rswag'
 gem 'rswag-api'
 gem 'rswag-ui'
+
+gem 'sprockets-rails'
