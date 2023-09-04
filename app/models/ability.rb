@@ -10,5 +10,9 @@ class Ability
     return unless user.role == 'user' # return unless user is logged in
 
     can :manage, Reservation, user_id: user.id
+
+    can :destroy, Doctor do |doctor|
+      doctor.user_id == user.id
+    end
   end
 end

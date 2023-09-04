@@ -4,7 +4,7 @@ class Api::V1::DoctorsController < ApplicationController
 
   # GET /doctors
   def index
-    @doctors = Doctor.all
+    @doctors = Doctor.includes(:reservations).includes(:clinics).all
     render json: @doctors
   end
 
@@ -41,7 +41,12 @@ class Api::V1::DoctorsController < ApplicationController
 
   # DELETE /doctors/1
   def destroy
-    @doctor.destroy
+    if @doctor.user == session_user || (session_user && session_user.role == 'admin')
+      @doctor.destroy
+      render json: { message: 'Doctor deleted successfully' }, status: :ok
+    else
+      render json: { message: 'You don\'t have permission to delete this doctor' }, status: :forbidden
+    end
   end
 
   private

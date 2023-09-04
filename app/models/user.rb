@@ -8,4 +8,5 @@ class User < ApplicationRecord
   validates :phone_number, presence: true, length: { maximum: 15 }
   validates :birthdate, presence: true
   validates :username, presence: true, length: { maximum: 15 }
+  validates_uniqueness_of :username, case_sensitive: false
 end
