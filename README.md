@@ -59,10 +59,10 @@
 ## 🚀 Live Demo & preview <a name="live demo"></a>
 
 ### API Documentation(#api-documentation-)
-Here you can see the API Documentation, in your [local host](http://localhost:3000/api-docs/index.html) or in [render](https://rails-yem3.onrender.com/api-docs/index.html)
+Here you can see the API Documentation, in your [local host](http://localhost:3000/api-docs/index.html).
 
 ### API URL 
-You can use this URL address to consump data from our API using [render](https://rails-yem3.onrender.com/).
+You can use this URL address to consump data from our API using [local host](localhost:3000/).
 
 
 <!-- GETTING STARTED -->
