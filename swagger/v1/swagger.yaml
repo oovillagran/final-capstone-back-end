@@ -19,6 +19,40 @@ paths:
       responses:
         '200':
           description: successful
+        '406':
+          description: Username has already been taken
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 406
+                  error:
+                    type: string
+                    example: Username already exists
+                  exception:
+                    type: string
+                    example: "#<ActiveRecord::RecordAlreadyExists: Username already Exists
+                      with 'id'=NaN>"
+        '500':
+          description: Internal server error, email already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  error:
+                    type: string
+                    example: Email already exists
+                  exception:
+                    type: string
+                    example: "#<ActiveRecord::RecordNotUnique: Email already Exists
+                      with 'id'=NaN>"
   "/login":
     post:
       summary: login auth
