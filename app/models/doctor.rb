@@ -1,7 +1,7 @@
 class Doctor < ApplicationRecord
   belongs_to :user
   has_one :specialty, dependent: :destroy
-  has_many :reservations
+  has_many :reservations, dependent: :destroy
   has_many :clinics, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 50 }
