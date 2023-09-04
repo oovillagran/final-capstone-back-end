@@ -263,8 +263,40 @@ paths:
       security:
         - BearerAuth: []
       responses:
-        '204':
+        '200':
           description: successfuly deleted.
+        '403':
+          description: You don't have permission to delete this doctor.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 403
+                  error:
+                    type: string
+                    example: Not Found
+                  exception:
+                    type: string
+                    example: "Completed 403 Forbidden in ..ms"
+        '500':
+          description: Doctor has at least one reservation, ensure to update or delete the reservation first.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  error:
+                    type: string
+                    example: Not Found
+                  exception:
+                    type: string
+                    example: "Completed 500 Doctor has reservations in progress"
 
   "/api/v1/specialties":
     get:
