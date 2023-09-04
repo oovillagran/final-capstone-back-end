@@ -120,6 +120,28 @@ rspec
 <!-- AUTHORS -->
 
 ## 👥 Authors <a name="authors"></a>
+👤 **Federica Ulzurrun**
+
+- GitHub: [@federicaulzurrun](https://github.com/federicaulzurrun)
+- Twitter: [@ulzurrunfede](https://mobile.twitter.com/ulzurrunfede)
+- LinkedIn: [Federica Ulzurrun](https://www.linkedin.com/in/federicaulzurrun/)
+
+👤 **Rashed Arman**
+
+- GitHub: [@rashedarman](https://github.com/rashedarman)
+- Twitter: [@rashedarman21](https://twitter.com/rashedarman21)
+- LinkedIn: [@rashedarman](https://linkedin.com/in/rashedarman)
+
+👤 **Kola Kolade**
+
+- GitHub: [@kkolade](https://github.com/kkolade)
+- Twitter: [@kola_kolade](https://twitter.com/kola_kolade)
+
+👤 **Eric Antwi**
+
+- GitHub: [@Mylo16](https://github.com/Mylo16)
+- Twitter: [@EricAntwi384](https://twitter.com/EricAntwi384)
+- LinkedIn: [ericopokuantwi](https://www.linkedin.com/in/ericopokuantwi/)
 
 👤 **Oscar Villagran**
 
