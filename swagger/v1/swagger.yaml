@@ -554,7 +554,7 @@ components:
           items:
             type: string
 servers:
-- url: http://localhost:3000/
+- url: https://rails-xdb0.onrender.com
   variables:
     defaultHost:
-      default: http://localhost:3000/
+      default: https://rails-xdb0.onrender.com

@@ -1,4 +1,4 @@
-# EasyClinic
+# EasyClinic API App
 
 <a name="readme-top"></a>
 
@@ -31,7 +31,7 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 EasyClinic app <a name="about-project"></a>
+# 📖 EasyClinic API app <a name="about-project"></a>
 
 **EasyClinic** is a back-end application, for our Final Capstone Project. It is based on an app to book an appointment with a doctor from a wide health network.
 
@@ -59,10 +59,10 @@
 ## 🚀 Live Demo & preview <a name="live demo"></a>
 
 ### API Documentation(#api-documentation-)
-Here you can see the API Documentation, in your [local host](http://localhost:3000/api-docs/index.html).
+Here you can see the API Documentation, in [render](https://rails-xdb0.onrender.com/api-docs/index.html).
 
 ### API URL 
-You can use this URL address to consump data from our API using [local host](localhost:3000/).
+You can use this URL address to consump data from our API using [localy](localhost:3000/) or using the URL provided by render [https://rails-xdb0.onrender.com](https://rails-xdb0.onrender.com)
 
 
 <!-- GETTING STARTED -->
@@ -108,7 +108,7 @@ rails server
 ```
 To see all API Endpoints available, in your preferred browser, navigate to:
 ```
-http://localhost:3000/api-docs/index.html
+https://rails-xdb0.onrender.com/api-docs/index.html
 ```
 
 ### Run tests
