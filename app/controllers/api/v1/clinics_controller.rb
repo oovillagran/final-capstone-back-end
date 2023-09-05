@@ -30,7 +30,13 @@ class Api::V1::ClinicsController < ApplicationController
   end
 
   def destroy
-    @clinic.destroy
+    @clinic = Clinic.find(params[:id])
+  
+    if @clinic.destroy
+      render json: { message: "Clinic successfully destroyed" }, status: :ok
+    else
+      render json: { error: "Failed to destroy clinic" }, status: :unprocessable_entity
+    end
   end
 
   private
