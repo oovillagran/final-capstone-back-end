@@ -236,8 +236,6 @@ paths:
       summary: show doctor
       tags:
         - Doctor
-      security:
-        - BearerAuth: []
       responses:
         '200':
           description: successful
