@@ -22,17 +22,17 @@ class Api::V1::SpecialtiesController < ApplicationController
 
   def destroy
     @specialty = Specialty.find_by(id: params[:id])
-  
+
     if @specialty
       if @specialty.destroy
-        render json: { message: "Specialty successfully destroyed" }, status: :ok
+        render json: { message: 'Specialty successfully destroyed' }, status: :ok
       else
-        render json: { error: "Failed to destroy the specialty" }, status: :unprocessable_entity
+        render json: { error: 'Failed to destroy the specialty' }, status: :unprocessable_entity
       end
     else
-      render json: { error: "Specialty not found" }, status: :not_found
+      render json: { error: 'Specialty not found' }, status: :not_found
     end
-  end  
+  end
 
   private
 
