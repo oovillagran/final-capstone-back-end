@@ -1,0 +1,558 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+
+  "/users":
+    post:
+      summary: create user
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: successful
+        '406':
+          description: Username has already been taken
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 406
+                  error:
+                    type: string
+                    example: Username already exists
+                  exception:
+                    type: string
+                    example: "#<ActiveRecord::RecordAlreadyExists: Username already Exists
+                      with 'id'=NaN>"
+        '500':
+          description: Internal server error, email already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  error:
+                    type: string
+                    example: Email already exists
+                  exception:
+                    type: string
+                    example: "#<ActiveRecord::RecordNotUnique: Email already Exists
+                      with 'id'=NaN>"
+  "/login":
+    post:
+      summary: login auth
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginInput'
+      responses:
+        '200':
+          description: successful
+  "/auto_login":
+    get:
+      summary: auto_login auth
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+  "/user_is_authed":
+    get:
+      summary: user_is_authed auth
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token obtained after user login
+          required: true
+          schema:
+            type: string
+            example: "Bearer your_token_here"
+      responses:
+        '200':
+          description: successful
+  
+  "/api/v1/users/{user_id}/reservations":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: list reservations
+      tags:
+        - Reservation
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create reservation
+      tags:
+        - Reservation
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservationInput'
+      responses:
+        '201':
+          description: successful
+  "/api/v1/users/{user_id}/reservations/{id}":
+    parameters:
+    - name: user_id
+      in: path
+      description: user_id
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show reservation
+      tags:
+        - Reservation
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: Reservation was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  error:
+                    type: string
+                    example: Not Found
+                  exception:
+                    type: string
+                    example: "#<ActiveRecord::RecordNotFound: Couldn't find Reservation
+                      with 'id'=NaN>"
+    patch:
+      summary: update reservation
+      tags:
+        - Reservation
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservationInput'
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete reservation
+      tags:
+        - Reservation
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: successful
+
+  "/api/v1/doctors":
+    get:
+      summary: list doctors
+      tags:
+        - Doctor
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create doctor
+      tags:
+        - Doctor
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Doctor'
+      responses:
+        '201':
+          description: successfully created
+  "/api/v1/doctors/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show doctor
+      tags:
+        - Doctor
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update doctor
+      tags:
+        - Doctor
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Doctor'
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete doctor
+      tags:
+        - Doctor
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: successfuly deleted.
+        '403':
+          description: You don't have permission to delete this doctor.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 403
+                  error:
+                    type: string
+                    example: Not Found
+                  exception:
+                    type: string
+                    example: "Completed 403 Forbidden in ..ms"
+        '500':
+          description: Doctor has at least one reservation, ensure to update or delete the reservation first.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  error:
+                    type: string
+                    example: Not Found
+                  exception:
+                    type: string
+                    example: "Completed 500 Doctor has reservations in progress"
+
+  "/api/v1/specialties":
+    get:
+      summary: list specialties
+      tags:
+        - Specialty
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create specialty
+      tags:
+        - Specialty
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Specialty'
+      responses:
+        '201':
+          description: successfully created
+        '422':
+          description: Doctor must exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 422
+                  error:
+                    type: string
+                    example: Doctor must exist.
+                  exception:
+                    type: string
+                    example: "#<ActiveRecord::RecordNotFound: Doctor must exist.
+                      with 'id'=NaN>"
+  "/api/v1/specialties/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show specialty
+      tags:
+        - Specialty
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete specialty
+      tags:
+        - Specialty
+      security:
+        - BearerAuth: []
+      responses:
+        '204':
+          description: successfully deleted
+  
+  "/api/v1/clinics":
+    get:
+      summary: list clinics
+      tags:
+        - Clinic
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create clinic
+      tags:
+        - Clinic
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Clinic'
+      responses:
+        '201':
+          description: successfully created.
+  "/api/v1/clinics/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show clinic
+      tags:
+        - Clinic
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update clinic
+      tags:
+        - Clinic
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Clinic'
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete clinic
+      tags:
+        - Clinic
+      security:
+        - BearerAuth: []
+      responses:
+        '204':
+          description: successfully deleted
+  
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    UserInput:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+        birthdate:
+          type: string
+          format: date
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    UserOutput:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        phone_number:
+          type: string
+        birthdate:
+          type: string
+          format: date
+        role:
+          type: string
+        email:
+          type: string
+    LoginInput:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        user:
+          $ref: '#/components/schemas/UserOutput'
+    ReservationInput:
+      type: object
+      properties:
+        reservation_date:
+          type: string
+          format: date
+        reservation_time:
+          type: string
+          format: time
+        doctor_id:
+          type: integer
+        clinic_id:
+          type: integer
+    ReservationOutput:
+      type: object
+      properties:
+        reservation_id:
+          type: integer
+        doctor_id:
+          type: integer
+        clinic_id:
+          type: integer
+    Doctor:
+      type: object
+      properties:
+        name:
+          type: string
+        photo:
+          type: string
+        bio:
+          type: string
+        experience_years:
+          type: string
+        user_id:
+          type: integer
+    Clinic:
+      type: object
+      properties:
+        name:
+          type: string
+        city:
+          type: string
+        address:
+          type: string
+        doctor_id:
+          type: integer
+    Specialty:
+      type: object
+      properties:
+        name:
+          type: string
+        doctor_id:
+          type: integer
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+servers:
+- url: https://rails-xdb0.onrender.com
+  variables:
+    defaultHost:
+      default: https://rails-xdb0.onrender.com
