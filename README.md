@@ -97,24 +97,43 @@ This example shows how to install Ruby 3.0.1 which was the latest version in Apr
 
 ### Usage
 
+Before running the project, make sure you have Ruby and Rails installed on your system. You can refer to the [official Ruby on Rails installation guide](https://guides.rubyonrails.org/getting_started.html) for instructions on how to install them.
 Once you have ruby installed, [clone this repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
-To run the project, execute the following command in the terminal:
+First navigate to the project directory in your terminal:
 ```
-bundle install
+  cd your-project-directory
 ```
+
+Then install the required gems by running in the terminal:
 ```
-rails server
+  bundle install
+```
+Create the database by running:
+```
+  rails db:create
+```
+Run the database migrations to set up the database schema:
+```
+  rails db:migrate
+```
+Optionally, you can seed the database with initial data (if the project provides seed data) by running:
+```
+  rails db:seed
+```
+Start the Rails server:
+```
+  rails server
 ```
 To see all API Endpoints available, in your preferred browser, navigate to:
 ```
-https://rails-xdb0.onrender.com/api-docs/index.html
+  https://rails-xdb0.onrender.com/api-docs/index.html
 ```
 
 ### Run tests
 To run tests, run the following command in the terminal:
 ```
-rspec
+  rspec
 ```
 
 <!-- AUTHORS -->
