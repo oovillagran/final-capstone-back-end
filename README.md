@@ -64,6 +64,11 @@ Here you can see the API Documentation, in [render](https://rails-xdb0.onrender.
 ### API URL 
 You can use this URL address to consump data from our API using [localy](localhost:3000/) or using the URL provided by render [https://rails-xdb0.onrender.com](https://rails-xdb0.onrender.com)
 
+## 📜 Kanban Board
+- [visit our kanban board](https://github.com/users/oovillagran/projects/9)
+- [Initial kanban board view](https://github.com/oovillagran/final-capstone-back-end/assets/122847613/f428598f-b769-4a1a-94c5-7a52e5ff7ee3)
+- We are a group of five people who collaborated in the entire project
+
 
 <!-- GETTING STARTED -->
 
